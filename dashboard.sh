@@ -44,6 +44,26 @@ read -p "Pilih menu: " MAIN
 
 
 # ==========================================================
+#      F U N G S I   A M A N   U N T U K   C U R L
+# ==========================================================
+safe_execute() {
+    FILE_URL="$1"
+
+    # cek apakah file benar-benar ada
+    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$FILE_URL")
+
+    if [[ "$HTTP_CODE" == "200" ]]; then
+        bash <(curl -sSL "$FILE_URL")
+    else
+        echo "❌ File tidak ditemukan: $FILE_URL"
+        echo "   Pastikan file sudah diupload ke repo!"
+        return 1
+    fi
+}
+
+
+
+# ==========================================================
 # ===============  INSTALL PROTECT SUBMENU  =================
 # ==========================================================
 if [[ "$MAIN" == "1" ]]; then
@@ -65,28 +85,19 @@ if [[ "$MAIN" == "1" ]]; then
     echo " "
     read -p "Pilih proteksi: " P
 
-    case $P in
-        1) bash <(curl -sSL "$REPO/install/installprotect1.sh") ;;
-        2) bash <(curl -sSL "$REPO/install/installprotect2.sh") ;;
-        3) bash <(curl -sSL "$REPO/install/installprotect3.sh") ;;
-        4) bash <(curl -sSL "$REPO/install/installprotect4.sh") ;;
-        5) bash <(curl -sSL "$REPO/install/installprotect5.sh") ;;
-        6) bash <(curl -sSL "$REPO/install/installprotect6.sh") ;;
-        7) bash <(curl -sSL "$REPO/install/installprotect7.sh") ;;
-        8) bash <(curl -sSL "$REPO/install/installprotect8.sh") ;;
-        9) bash <(curl -sSL "$REPO/install/installprotect9.sh") ;;
-        10)
-            echo "🚀 Installing ALL protections..."
-            for i in {1..9}; do
-                bash <(curl -sSL "$REPO/install/installprotect$i.sh")
-            done
-            echo "✅ ALL protections installed!"
-            ;;
-        *)
-            echo "❌ Menu tidak valid."
-            ;;
-    esac
+    if [[ "$P" =~ ^[1-9]$ ]]; then
+        safe_execute "$REPO/install/installprotect$P.sh"
+    elif [[ "$P" == "10" ]]; then
+        echo "🚀 Installing ALL protections..."
+        for i in {1..9}; do
+            safe_execute "$REPO/install/installprotect$i.sh"
+        done
+        echo "✅ ALL protections installed!"
+    else
+        echo "❌ Menu tidak valid."
+    fi
 fi
+
 
 
 # ==========================================================
@@ -103,24 +114,15 @@ if [[ "$MAIN" == "2" ]]; then
     echo " "
     read -p "Pilih uninstall: " U
 
-    case $U in
-        1) bash <(curl -sSL "$REPO/uninstall/uninstallprotect1.sh") ;;
-        2) bash <(curl -sSL "$REPO/uninstall/uninstallprotect2.sh") ;;
-        3) bash <(curl -sSL "$REPO/uninstall/uninstallprotect3.sh") ;;
-        4) bash <(curl -sSL "$REPO/uninstall/uninstallprotect4.sh") ;;
-        5) bash <(curl -sSL "$REPO/uninstall/uninstallprotect5.sh") ;;
-        6) bash <(curl -sSL "$REPO/uninstall/uninstallprotect6.sh") ;;
-        7) bash <(curl -sSL "$REPO/uninstall/uninstallprotect7.sh") ;;
-        8) bash <(curl -sSL "$REPO/uninstall/uninstallprotect8.sh") ;;
-        9) bash <(curl -sSL "$REPO/uninstall/uninstallprotect9.sh") ;;
-        10)
-            bash <(curl -sSL "$REPO/uninstall/uninstall-all.sh")
-            ;;
-        *)
-            echo "❌ Menu tidak valid."
-            ;;
-    esac
+    if [[ "$U" =~ ^[1-9]$ ]]; then
+        safe_execute "$REPO/uninstall/uninstallprotect$U.sh"
+    elif [[ "$U" == "10" ]]; then
+        safe_execute "$REPO/uninstall/uninstall-all.sh"
+    else
+        echo "❌ Menu tidak valid."
+    fi
 fi
+
 
 # ==========================================================
 if [[ "$MAIN" == "3" ]]; then
