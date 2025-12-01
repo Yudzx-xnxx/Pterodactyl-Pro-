@@ -22,110 +22,110 @@ if ! command -v neofetch >/dev/null 2>&1; then
     fi
 fi
 
+
 # ==========================================================
-# ========== TAMPILKAN NEOFETCH (JIKA ADA) ==================
+# ===================== HEADER NEOFETCH =====================
 # ==========================================================
+clear
 if command -v neofetch >/dev/null 2>&1; then
     neofetch
 fi
 
-
 echo " "
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "        YudzxTech Protection Setup       "
-echo "        Telegram: t.me/Yudzxcysec        "
+echo "           YudzxTech Protect Tool        "
+echo "         Telegram: t.me/Yudzxcysec       "
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo " "
-echo "1) Install Protect"
-echo "2) Uninstall Protect"
-echo "3) Exit"
+echo " 1) Install Protect"
+echo " 2) Uninstall Protect"
+echo " 3) Exit"
 echo " "
 read -p "Pilih menu: " MAIN
 
 
-# ==========================================================
-#      F U N G S I   A M A N   U N T U K   C U R L
-# ==========================================================
-safe_execute() {
-    FILE_URL="$1"
-
-    # cek apakah file benar-benar ada
-    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$FILE_URL")
-
-    if [[ "$HTTP_CODE" == "200" ]]; then
-        bash <(curl -sSL "$FILE_URL")
-    else
-        echo "❌ File tidak ditemukan: $FILE_URL"
-        echo "   Pastikan file sudah diupload ke repo!"
-        return 1
-    fi
-}
-
 
 
 # ==========================================================
-# ===============  INSTALL PROTECT SUBMENU  =================
+# ======================= INSTALL MENU ======================
 # ==========================================================
 if [[ "$MAIN" == "1" ]]; then
     clear
     neofetch 2>/dev/null
 
-    echo "┏╾─⧼ Protect Menu ⧽─╸"
-    echo "│ 1. Anti Delete Server"
-    echo "│ 2. Anti Delete User"
-    echo "│ 3. Anti Intip Allocation"
-    echo "│ 4. Anti Intip Nodes"
-    echo "│ 5. Anti Intip Nest"
-    echo "│ 6. Anti Intip Settings"
-    echo "│ 7. Anti Akses Server (1)"
-    echo "│ 8. Anti Akses Server (2)"
-    echo "│ 9. Anti Modifikasi Detail Server"
-    echo "│ 10. Install ALL Protects"
+    echo "┏╾─⧼ Install Protect Menu ⧽─╸"
+    echo "│  1.  Anti Delete Server"
+    echo "│  2.  Anti Delete User"
+    echo "│  3.  Anti Intip Allocation"
+    echo "│  4.  Anti Intip Nodes"
+    echo "│  5.  Anti Intip Nest"
+    echo "│  6.  Anti Intip Settings"
+    echo "│  7.  Anti Akses Server (1)"
+    echo "│  8.  Anti Akses Server (2)"
+    echo "│  9.  Anti Modifikasi Detail Server"
+    echo "│ 10.  Install Protect 10"
+    echo "│ 11.  Install Protect 11"
+    echo "│ 12.  Install Protect 12"
+    echo "│ 13.  Install Protect 13"
+    echo "│ 14.  Install Protect 14"
+    echo "│ 15.  Install Protect 15"
+    echo "│ 16.  Install ALL Protect"
     echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo " "
     read -p "Pilih proteksi: " P
 
-    if [[ "$P" =~ ^[1-9]$ ]]; then
-        safe_execute "$REPO/install/installprotect$P.sh"
-    elif [[ "$P" == "10" ]]; then
-        echo "🚀 Installing ALL protections..."
-        for i in {1..9}; do
-            safe_execute "$REPO/install/installprotect$i.sh"
+    if [[ "$P" =~ ^[1-9]$|^1[0-5]$ ]]; then
+        bash <(curl -sSL "$REPO/install/installprotect$P.sh")
+        exit
+    elif [[ "$P" == "16" ]]; then
+        echo "🚀 Installing ALL Protects..."
+        for i in {1..15}; do
+            bash <(curl -sSL "$REPO/install/installprotect$i.sh")
         done
-        echo "✅ ALL protections installed!"
+        echo "✅ Semua proteksi berhasil di-install!"
+        exit
     else
         echo "❌ Menu tidak valid."
+        exit
     fi
 fi
 
 
 
 # ==========================================================
-# ===============  UNINSTALL PROTECT SUBMENU  ===============
+# ====================== UNINSTALL MENU =====================
 # ==========================================================
 if [[ "$MAIN" == "2" ]]; then
     clear
     neofetch 2>/dev/null
 
-    echo "┏╾─⧼ Uninstall Menu ⧽─╸"
-    echo "│ 1–9. Uninstall protect per file"
-    echo "│ 10. Uninstall ALL Protections"
+    echo "┏╾─⧼ Uninstall Protect Menu ⧽─╸"
+    echo "│  1–15. Uninstall protect per nomor"
+    echo "│  16.   Uninstall ALL Protections"
     echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo " "
     read -p "Pilih uninstall: " U
 
-    if [[ "$U" =~ ^[1-9]$ ]]; then
-        safe_execute "$REPO/uninstall/uninstallprotect$U.sh"
-    elif [[ "$U" == "10" ]]; then
-        safe_execute "$REPO/uninstall/uninstall-all.sh"
+    if [[ "$U" =~ ^[1-9]$|^1[0-5]$ ]]; then
+        bash <(curl -sSL "$REPO/uninstall/uninstallprotect$U.sh")
+        exit
+    elif [[ "$U" == "16" ]]; then
+        bash <(curl -sSL "$REPO/uninstall/uninstall-all.sh")
+        exit
     else
         echo "❌ Menu tidak valid."
+        exit
     fi
 fi
 
 
 # ==========================================================
+# ========================== EXIT ===========================
+# ==========================================================
 if [[ "$MAIN" == "3" ]]; then
     echo "👋 Keluar..."
     exit 0
 fi
+
+echo "❌ Pilihan tidak valid."
+exit 1
