@@ -1,131 +1,122 @@
 #!/bin/bash
 
-REPO="https://raw.githubusercontent.com/Yudzx-xnxx/Pterodactyl-Pro-/main"
+# ==============================
+#  AUTO INSTALL NEOFETCH
+# ==============================
+if ! command -v neofetch &> /dev/null; then
+    echo "Menginstall Neofetch..."
+    apt update -y >/dev/null 2>&1
+    apt install neofetch -y >/dev/null 2>&1
+fi
 
 clear
+neofetch --ascii_distro ubuntu
 
-# ==========================================================
-# ========== AUTO INSTALL NEOFETCH JIKA BELUM ADA ==========
-# ==========================================================
-if ! command -v neofetch >/dev/null 2>&1; then
-    echo "📦 Neofetch tidak ditemukan. Menginstal..."
+# ==============================
+#  REPO DASAR
+# ==============================
+BASE_URL="https://raw.githubusercontent.com/Yudzx-xnxx/Pterodactyl-Pro-/main"
 
-    if command -v apt >/dev/null 2>&1; then
-        sudo apt update -y && sudo apt install neofetch -y
-    elif command -v yum >/dev/null 2>&1; then
-        sudo yum install neofetch -y
-    elif command -v dnf >/dev/null 2>&1; then
-        sudo dnf install neofetch -y
-    else
-        echo "⚠️  Tidak dapat menginstal neofetch secara otomatis."
-        echo "    Melanjutkan tanpa neofetch..."
-    fi
-fi
-
-
-# ==========================================================
-# ===================== HEADER NEOFETCH =====================
-# ==========================================================
+# ==============================
+#  DASHBOARD UTAMA
+# ==============================
+menu() {
 clear
-if command -v neofetch >/dev/null 2>&1; then
-    neofetch
+neofetch --ascii_distro ubuntu
+
+echo "┏╾─⧼ 𝐏𝐭𝐞𝐫𝐨𝐝𝐚𝐜𝐭𝐲𝐥 𝐏𝐫𝐨 - 𝐃𝐚𝐬𝐡𝐛𝐨𝐚𝐫𝐝 ⧽─╸"
+echo "│ 1. Install Protect"
+echo "│ 2. Uninstall Protect"
+echo "│ 3. Update Script"
+echo "│ 4. Exit"
+echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo -n "Pilih menu: "
+read pilihan
+
+case $pilihan in
+    1) install_menu ;;
+    2) uninstall_menu ;;
+    3) update_script ;;
+    4) exit 0 ;;
+    *) echo "❌ Pilihan tidak valid!"; sleep 1; menu ;;
+esac
+}
+
+# ==============================
+#  INSTALL MENU
+# ==============================
+install_menu() {
+clear
+neofetch --ascii_distro ubuntu
+
+echo "┏╾─⧼ Install Protect Menu ⧽─╸"
+echo "│ 1. Anti Delete Server"
+echo "│ 2. Anti Delete User"
+echo "│ 3. Anti Intip Allocation"
+echo "│ 4. Anti Intip Nodes"
+echo "│ 5. Anti Intip Nest"
+echo "│ 6. Anti Intip Settings"
+echo "│ 7. Anti Intip Server #1"
+echo "│ 8. Anti Intip Server #2"
+echo "│ 9. Anti Modifikasi Detail Server"
+echo "│ 10. Install ALL Protect"
+echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo -n "Pilih install (1-10): "
+read inst
+
+if [[ $inst =~ ^[1-9]$ ]]; then
+    sh <(curl -s "$BASE_URL/install/YudzxTech$inst.sh")
+elif [[ $inst == "10" ]]; then
+    sh <(curl -s "$BASE_URL/install/YudzxTechall.sh")
+else
+    echo "❌ Menu tidak valid."
 fi
 
-echo " "
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "           YudzxTech Protect Tool        "
-echo "         Telegram: t.me/Yudzxcysec       "
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo " "
-echo " 1) Install Protect"
-echo " 2) Uninstall Protect"
-echo " 3) Exit"
-echo " "
-read -p "Pilih menu: " MAIN
+echo ""
+read -p "Tekan ENTER untuk kembali..."
+menu
+}
 
+# ==============================
+#  UNINSTALL MENU
+# ==============================
+uninstall_menu() {
+clear
+neofetch --ascii_distro ubuntu
 
+echo "┏╾─⧼ Uninstall Protect Menu ⧽─╸"
+echo "│ 1–9. Uninstall Protect per File"
+echo "│ 10. Uninstall ALL Protect"
+echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo -n "Pilih uninstall (1-10): "
+read unin
 
-
-# ==========================================================
-# ======================= INSTALL MENU ======================
-# ==========================================================
-if [[ "$MAIN" == "1" ]]; then
-    clear
-    neofetch 2>/dev/null
-
-    echo "┏╾─⧼ Install Protect Menu ⧽─╸"
-    echo "│  1.  Anti Delete Server"
-    echo "│  2.  Anti Delete User"
-    echo "│  3.  Anti Intip Allocation"
-    echo "│  4.  Anti Intip Nodes"
-    echo "│  5.  Anti Intip Nest"
-    echo "│  6.  Anti Intip Settings"
-    echo "│  7.  Anti Akses Server (1)"
-    echo "│  8.  Anti Akses Server (2)"
-    echo "│  9.  Anti Modifikasi Detail Server"
-    echo "│ 10.  Install Protect 10"
-    echo "│ 11.  Install Protect 11"
-    echo "│ 12.  Install Protect 12"
-    echo "│ 13.  Install Protect 13"
-    echo "│ 14.  Install Protect 14"
-    echo "│ 15.  Install Protect 15"
-    echo "│ 16.  Install ALL Protect"
-    echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo " "
-    read -p "Pilih proteksi: " P
-
-    if [[ "$P" =~ ^[1-9]$|^1[0-5]$ ]]; then
-        bash <(curl -sSL "$REPO/install/installprotect$P.sh")
-        exit
-    elif [[ "$P" == "16" ]]; then
-        echo "🚀 Installing ALL Protects..."
-        for i in {1..15}; do
-            bash <(curl -sSL "$REPO/install/installprotect$i.sh")
-        done
-        echo "✅ Semua proteksi berhasil di-install!"
-        exit
-    else
-        echo "❌ Menu tidak valid."
-        exit
-    fi
+if [[ $unin =~ ^[1-9]$ ]]; then
+    sh <(curl -s "$BASE_URL/uninstall/uninstallprotect$unin.sh")
+elif [[ $unin == "10" ]]; then
+    sh <(curl -s "$BASE_URL/uninstall/uninstall-all.sh")
+else
+    echo "❌ Menu tidak valid."
 fi
 
+echo ""
+read -p "Tekan ENTER untuk kembali..."
+menu
+}
 
+# ==============================
+#  UPDATE SCRIPT
+# ==============================
+update_script() {
+clear
+echo "🔄 Mengupdate dashboard..."
 
-# ==========================================================
-# ====================== UNINSTALL MENU =====================
-# ==========================================================
-if [[ "$MAIN" == "2" ]]; then
-    clear
-    neofetch 2>/dev/null
+curl -s "$BASE_URL/dashboard.sh" -o dashboard.sh
+chmod +x dashboard.sh
 
-    echo "┏╾─⧼ Uninstall Protect Menu ⧽─╸"
-    echo "│  1–15. Uninstall protect per nomor"
-    echo "│  16.   Uninstall ALL Protections"
-    echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo " "
-    read -p "Pilih uninstall: " U
+echo "✅ Update selesai! Jalankan ulang: ./dashboard.sh"
+exit
+}
 
-    if [[ "$U" =~ ^[1-9]$|^1[0-5]$ ]]; then
-        bash <(curl -sSL "$REPO/uninstall/uninstallprotect$U.sh")
-        exit
-    elif [[ "$U" == "16" ]]; then
-        bash <(curl -sSL "$REPO/uninstall/uninstall-all.sh")
-        exit
-    else
-        echo "❌ Menu tidak valid."
-        exit
-    fi
-fi
-
-
-# ==========================================================
-# ========================== EXIT ===========================
-# ==========================================================
-if [[ "$MAIN" == "3" ]]; then
-    echo "👋 Keluar..."
-    exit 0
-fi
-
-echo "❌ Pilihan tidak valid."
-exit 1
+# Jalankan Menu
+menu
